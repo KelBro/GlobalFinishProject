@@ -3,7 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
@@ -32,6 +33,11 @@ def about():
 @app.route('/user/<string:name>/<int:id>')
 def user(name, id):
     return f"User page {name} {id}"
+
+
+@app.route('/create-article')
+def article():
+    return render_template("create-article.html")
 
 
 if __name__ == "__main__":
