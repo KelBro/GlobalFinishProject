@@ -1,44 +1,20 @@
 from flask import Flask, render_template, url_for
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from data import db_session
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-
-class Article(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=True)
-    intro = db.Column(db.String(300), nullable=True)
-    text = db.Column(db.Text, nullable=True)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return '<Article %r>' % self.id
+app.config['SECRET_KEY'] = 'sekretni_kodik'
 
 
 @app.route('/')
-@app.route('/home')
+@app.route('/index')
 def index():
     return render_template("index.html")
 
 
-@app.route('/about')
-def about():
-    return render_template("about.html")
+def main():
+    db_session.global_init("db/blogs.db")
+    app.run(port=8080, host='127.0.0.1', debug=True)
 
 
-@app.route('/user/<string:name>/<int:id>')
-def user(name, id):
-    return f"User page {name} {id}"
-
-
-@app.route('/create-article')
-def article():
-    return render_template("create-article.html")
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    main()
