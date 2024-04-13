@@ -9,46 +9,31 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <header data-bs-theme="dark">
-      <div class="text-bg-dark collapse" id="navbarHeader" style="">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-8 col-md-7 py-4">
-              <h4>5</h4>
-              <p class="text-body-secondary">6</p>
-            </div>
-            <div class="col-sm-4 offset-md-1 py-4">
-              <h4>7</h4>
-              <ul class="list-unstyled">
-                <li><a href="#" class="text-white">1</a></li>
-                <li><a href="#" class="text-white">2</a></li>
-                <li><a href="#" class="text-white">3</a></li>
-              </ul>
-            </div>
-          </div>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">ВВГУ</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/profile">Профиль</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
         </div>
       </div>
-      <div class="navbar navbar-dark bg-dark shadow-sm">
-        <div class="container">
-          <a href="#" class="navbar-brand d-flex align-items-center">
-            <strong>4</strong>
-          </a>
-          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="تبديل التنقل">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-      </div>
-    </header>
+    </nav>
     {% block body %}{% endblock %}
-    <div class="container">
-      <footer class="container d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-          <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-          </a>
-          <span class="mb-3 mb-md-0 text-body-secondary">© 2024 VVGU, Inc</span>
-        </div>
-      </footer>
-    </div>
+    <footer class="container">
+        <p>© 2024 VVGU, Inc. · <a href="#">Help</a></p>
+    </footer>
 </body>
 </html>
