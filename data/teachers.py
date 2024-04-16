@@ -14,9 +14,9 @@ class Teacher(SqlAlchemyBase):
     email = sqlalchemy.Column(sqlalchemy.String,
                               index=True, unique=True, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True, unique=True)
-    club_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("clubs.id"), nullable=True)
+    # club_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("clubs.id"), nullable=True)
     # created_date = sqlalchemy.Column(sqlalchemy.DateTime,
     #                                  default=datetime.datetime.now)
 
-    clubs = orm.relationship("Clubs", back_populates='teacher')
-    club = orm.relationship('Clubs')
+    # clubs = orm.relationship("Clubs", back_populates='teacher')
+    # club = orm.relationship('Clubs')

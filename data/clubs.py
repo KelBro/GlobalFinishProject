@@ -15,7 +15,7 @@ class Clubs(SqlAlchemyBase):
     is_closed = sqlalchemy.Column(sqlalchemy.Boolean, nullable=True)
     about = sqlalchemy.Column(sqlalchemy.String)
 
-    teacher = orm.relationship('Teacher')
-    request = orm.relationship("Request", back_populates='club')
-    teachers = orm.relationship("Teacher", back_populates='club')
+    # teacher = orm.relationship('Teacher')
+    # request = orm.relationship("Request", back_populates='club')
+    # teachers = orm.relationship("Teacher", back_populates='club')
 
