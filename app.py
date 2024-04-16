@@ -11,6 +11,11 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/login")
+def login():
+    return render_template("logining.html")
+
+
 def main():
     db_session.global_init("db/blogs.db")
     app.run(port=8080, host='127.0.0.1', debug=True)
