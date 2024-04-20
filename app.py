@@ -1,22 +1,51 @@
 from flask import Flask, render_template, url_for, redirect
-from data import db_session
-from data.students import Student
-from forms.register_student import RegisterForm
+from flask_login import LoginManager, login_user, login_required, logout_user
 
+from data import db_session
+from data.clubs import Clubs
+from data.students import Student
+from forms.register_student import RegisterForm, LoginForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sekretni_kodik'
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    db_sess = db_session.create_session()
+    return db_sess.query(Student).get(user_id)
 
 
 @app.route('/')
 @app.route('/index')
 def index():
+    db_sess = db_session.create_session()
+    title = db_sess.query(Clubs).all()
+    print(title)
     return render_template("index.html")
 
 
-# @app.route("/login")
-# def login():
-#     return render_template("logining.html")
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        user = db_sess.query(Student).filter(Student.email == form.email.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember_me.data)
+            return redirect("/")
+        return render_template('signing.html',
+                               message="Неправильный логин или пароль",
+                               form=form)
+    return render_template('signing.html', form=form)
 
 
 @app.route("/about")
@@ -41,6 +70,8 @@ def reqister():
             name=form.name.data,
             email=form.email.data,
             age=form.age.data,
+            is_teacher=form.boolField.data,
+            name_club=form.select.data,
         )
         user.set_password(form.password.data)
         db_sess.add(user)

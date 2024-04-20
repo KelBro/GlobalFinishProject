@@ -74,6 +74,29 @@
             </p>
         {% endfor %}
     </p>
+
+    <p>
+        {{ form.boolField.label }}<br>
+        {{ form.boolField() }}<br>
+        {% for error in form.boolField.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+
+
+    <p>
+        {{ form.select.label }}<br>
+        {{ form.select(class="form-control") }}<br>
+        {% for error in form.select.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+
+
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{message}}
 </form>
