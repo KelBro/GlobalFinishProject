@@ -92,7 +92,7 @@ def reqister():
 
 def main():
     # Инициализация базы данных
-    db_session.global_init("db/blogs.db")
+    db_session.global_init("db/vvgu_clubs_bd.db")
     # Запуск сервера Flask
     app.run(port=8080, host='127.0.0.1', debug=True)
 
