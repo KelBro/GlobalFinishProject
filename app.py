@@ -18,6 +18,7 @@ def load_user(user_id):
     return db_sess.query(Student).get(user_id)
 
 
+# Главная страница
 @app.route('/')
 @app.route('/index')
 def index():
@@ -33,6 +34,7 @@ def logout():
     logout_user()
     return redirect("/")
 
+# Страница входа
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -48,11 +50,13 @@ def login():
     return render_template('signing.html', form=form)
 
 
+# О странице
 @app.route("/about")
 def about():
     return render_template("about.html")
 
 
+# Регистрация нового пользователя
 @app.route('/register', methods=['GET', 'POST'])
 def reqister():
     form = RegisterForm()
@@ -61,11 +65,14 @@ def reqister():
             return render_template('register.html', title='Регистрация',
                                    form=form,
                                    message="Пароли не совпадают")
+        # Создаем новую сессию базы данных
         db_sess = db_session.create_session()
+        # Проверяем, существует ли пользователь с таким email
         if db_sess.query(Student).filter(Student.email == form.email.data).first():
             return render_template('register.html', title='Регистрация',
                                    form=form,
                                    message="Такой пользователь уже есть")
+        # Создаем нового пользователя
         user = Student(
             name=form.name.data,
             email=form.email.data,
@@ -74,14 +81,18 @@ def reqister():
             name_club=form.select.data,
         )
         user.set_password(form.password.data)
+        # Добавляем пользователя в базу данных и сохраняем изменения
         db_sess.add(user)
         db_sess.commit()
+        # Перенаправляем на страницу входа
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
 
 
 def main():
+    # Инициализация базы данных
     db_session.global_init("db/blogs.db")
+    # Запуск сервера Flask
     app.run(port=8080, host='127.0.0.1', debug=True)
 
 

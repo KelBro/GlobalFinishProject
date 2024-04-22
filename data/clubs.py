@@ -3,10 +3,11 @@ from sqlalchemy import orm
 
 from .db_session import SqlAlchemyBase
 
-
 class Clubs(SqlAlchemyBase):
+    # Указываем название таблицы в базе данных
     __tablename__ = 'clubs'
 
+    # Определяем столбцы таблицы и их типы данных
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True, unique=True)
     title = sqlalchemy.Column(sqlalchemy.String, nullable=True)
@@ -18,4 +19,3 @@ class Clubs(SqlAlchemyBase):
     # teacher = orm.relationship('Teacher')
     # request = orm.relationship("Request", back_populates='club')
     # teachers = orm.relationship("Teacher", back_populates='club')
-

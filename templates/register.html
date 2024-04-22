@@ -12,26 +12,32 @@
     <title>Регистация</title>
 </head>
 <body>
+<!-- Шапка сайта -->
 <header class="p-3 text-bg-dark">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-              <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
             </a>
-
+            <!-- Навигационное меню -->
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
-              <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
+                <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
             </ul>
-          </div>
         </div>
-      </header>
+    </div>
+</header>
+<!-- Заголовок формы -->
 <h1 class="col-lg-6 col-md-8 mx-auto py-5 text-center container">Регистрация</h1>
+<!-- Форма регистрации -->
 <form action="" method="post" class="col-lg-6 col-md-8 mx-auto">
     {{ form.hidden_tag() }}
     <p>
         {{ form.email.label }}<br>
-        {{ form.email(class="form-control", type="email") }}<br>
+        {{ form.email(class="form-control", type="email") }}
+        <!-- Отображение ошибок валидации для поля email -->
         {% for error in form.email.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
@@ -40,7 +46,8 @@
     </p>
     <p>
         {{ form.password.label }}<br>
-        {{ form.password(class="form-control", type="password") }}<br>
+        {{ form.password(class="form-control", type="password") }}
+        <!-- Отображение ошибок валидации для поля пароля -->
         {% for error in form.password.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
@@ -49,7 +56,8 @@
     </p>
     <p>
         {{ form.password_again.label }}<br>
-        {{ form.password_again(class="form-control", type="password") }}<br>
+        {{ form.password_again(class="form-control", type="password") }}
+        <!-- Отображение ошибок валидации для поля повторного ввода пароля -->
         {% for error in form.password_again.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
@@ -58,7 +66,8 @@
     </p>
     <p>
         {{ form.name.label }}<br>
-        {{ form.name(class="form-control") }}<br>
+        {{ form.name(class="form-control") }}
+        <!-- Отображение ошибок валидации для поля имени -->
         {% for error in form.name.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
@@ -67,7 +76,8 @@
     </p>
     <p>
         {{ form.age.label }}<br>
-        {{ form.age(class="form-control") }}<br>
+        {{ form.age(class="form-control") }}
+        <!-- Отображение ошибок валидации для поля возраста -->
         {% for error in form.age.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
@@ -96,7 +106,7 @@
         {% endfor %}
     </p>
 
-
+    <!-- Кнопка отправки формы -->
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{message}}
 </form>
