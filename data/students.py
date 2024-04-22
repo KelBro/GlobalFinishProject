@@ -21,6 +21,7 @@ class Student(SqlAlchemyBase, UserMixin):
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     is_teacher = sqlalchemy.Column(sqlalchemy.Boolean, nullable=True, default=False)
     name_club = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    have_club = sqlalchemy.Column(sqlalchemy.Boolean, nullable=True, default=False)
     # created_date = sqlalchemy.Column(sqlalchemy.DateTime,
     #                                  default=datetime.datetime.now)
     # request = orm.relationship("Request", back_populates='student')

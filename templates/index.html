@@ -24,8 +24,12 @@
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
           <div class="col-lg-6 col-md-8 mx-auto">
-              {% if current_user.is_authenticated %}
+              {% if current_user.is_authenticated and not current_user.is_teacher %}
+              <!-- Заголовок -->
+              <h1 id="titlee">Vvgu_Clubs</h1>
               <h1>Выберите кружок на который вы хотите записаться</h1>
+              {% elif current_user.is_teacher %}
+              <h1>Кружки для учеников</h1>
               {% else %}
                 <!-- Заголовок -->
                 <h1 id="titlee">Vvgu_Clubs</h1>
@@ -50,7 +54,7 @@
                     <div class="card-body">
                       <p class="card-text">{{ club.about }}</p>
                       <div class="d-flex justify-content-between align-items-center">
-                          {% if current_user.is_authenticated %}
+                          {% if current_user.is_authenticated and not current_user.is_teacher %}
                               {% if club.is_closed %}
                                 <p class="text-secondary">Набор закрыт</p>
                               {% else %}
