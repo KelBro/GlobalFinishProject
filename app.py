@@ -23,9 +23,9 @@ def load_user(user_id):
 @app.route('/index')
 def index():
     db_sess = db_session.create_session()
-    title = db_sess.query(Clubs).all()
-    print(title)
-    return render_template("index.html")
+    clubs = db_sess.query(Clubs).all()
+    db_sess.close()
+    return render_template("index.html", clubs=clubs)
 
 
 @app.route('/logout')
@@ -33,6 +33,7 @@ def index():
 def logout():
     logout_user()
     return redirect("/")
+
 
 # Страница входа
 @app.route('/login', methods=['GET', 'POST'])

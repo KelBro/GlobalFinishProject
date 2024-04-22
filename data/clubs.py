@@ -11,7 +11,7 @@ class Clubs(SqlAlchemyBase):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True, unique=True)
     title = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    teacher_id = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
+    teacher_name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     type = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     is_closed = sqlalchemy.Column(sqlalchemy.Boolean, nullable=True, default=False)
     about = sqlalchemy.Column(sqlalchemy.String)
