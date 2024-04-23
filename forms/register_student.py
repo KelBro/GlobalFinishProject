@@ -18,5 +18,6 @@ class RegisterForm(FlaskForm):
     name = StringField('Имя пользователя', validators=[DataRequired()])
     age = IntegerField('Возраст', validators=[DataRequired()])
     boolField = BooleanField("Вы преподаватель?")
-    select = SelectField('Направления', choices=[('vol', 'Волонтёрство'), ('sp', 'Спорт'), ('na', 'Наука')])
+    select = SelectField('Направления',
+                         choices=[('vol', 'Волонтёрство'), ('sp', 'Спорт'), ('na', 'Наука'), ('tv', 'Творчество')])
     submit = SubmitField('Войти')
