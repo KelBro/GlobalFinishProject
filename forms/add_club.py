@@ -4,7 +4,7 @@ from wtforms import SubmitField
 from wtforms.validators import DataRequired
 
 
-class NewsForm(FlaskForm):
+class ClubForm(FlaskForm):
     title = StringField('Название', validators=[DataRequired()])
     teacher_name = TextAreaField("ФИО сотрудника")
     about = TextAreaField("Содержание")

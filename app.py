@@ -1,10 +1,10 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 from data import db_session
 from data.clubs import Clubs
 from data.students import Student
-from forms.add_club import NewsForm
+from forms.add_club import ClubForm
 from forms.register_student import RegisterForm, LoginForm
 
 app = Flask(__name__)
@@ -92,9 +92,10 @@ def reqister():
 
 
 # Создание нового кружка
-@app.route('/create', methods=['GET', 'POST'])
+@app.route('/club/create', methods=['GET', 'POST'])
+@login_required
 def add_club():
-    form = NewsForm()
+    form = ClubForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         if db_sess.query(Clubs).filter(Clubs.title == form.title.data).first():
@@ -110,6 +111,7 @@ def add_club():
             about=form.about.data,
             type=type_club
         )
+
         db_sess.add(club)
         db_sess.commit()
         return redirect('/')
