@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 from data import db_session
@@ -104,7 +104,6 @@ def add_club():
                                    message="Такой кружок уже есть")
         teacher_name = current_user.name
         type_club = current_user.name_club
-
         club = Clubs(
             title=form.title.data,
             teacher_name=teacher_name,
@@ -113,9 +112,28 @@ def add_club():
         )
 
         db_sess.add(club)
+
+        teacher = db_sess.query(Student).filter(Student.name == teacher_name).first()
+        teacher.have_club = 1
+
         db_sess.commit()
         return redirect('/')
     return render_template('add_club.html', title='Добавление кружка', form=form)
+
+
+# Изменение кружка
+@app.route('/club/edit', methods=['GET', 'POST'])
+def edit_club():
+    db_sess = db_session.create_session()
+    club = db_sess.query(Clubs).filter_by(teacher_name=current_user.name).first()
+    if not club:
+        return redirect('/')
+    form = ClubForm(obj=club)
+    if form.validate_on_submit():
+        form.populate_obj(club)
+        db_sess.commit()
+        return redirect('/')
+    return render_template('edit_club.html', title='Изменение кружка', form=form)
 
 
 def main():
