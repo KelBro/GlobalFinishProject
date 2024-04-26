@@ -87,4 +87,20 @@
         </div>
       </div>
 </main>
+<div id="map" style="width: 85%; height: 400px; margin: 0 auto"></div>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=40d1649f-0493-4b70-98ba-98533de7710b"></script>
+    <script type="text/javascript">
+        ymaps.load(function () {
+            var myMap = new ymaps.Map('map', {
+                center: [43.124893188, 131.904998779],
+                zoom: 16.5
+            });
+
+            var myPlacemark = new ymaps.Placemark([43.124893188, 131.904998779], {
+                balloonContent: '<strong>Владивостотский Государственный Университет</strong>'
+            });
+
+            myMap.geoObjects.add(myPlacemark);
+        });
+    </script>
 {% endblock %}
