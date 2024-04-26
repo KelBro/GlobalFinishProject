@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Заявки студентов</title>
+{% endblock %}
+
+{% block body %}
+{% if current_user.is_authenticated and current_user.is_teacher %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <!-- Заголовок -->
+            <h1 id="titlee">Заявки студентов</h1>
+        </div>
+    </div>
+</section>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for request in req %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ request.name_club }}</text></svg>
+                        <div class="card-body">
+                          <p class="card-text">{{ request.information }}</p>
+                          <div class="d-flex justify-content-between align-items-center">
+                              {% if request.is_approved == 1 %}
+                                <p class="text-secondary">Одобрен</p>
+                              {% elif request.is_approved == 0 %}
+                                  <p class="text-secondary">Отклонен</p>
+                              {% else %}
+                                <a href="{{ url_for('accept', id=request.id) }}">Принять</a>
+                                <a href="{{ url_for('reject', id=request.id) }}">Отклонить</a>
+                              {% endif %}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

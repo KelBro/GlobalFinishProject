@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, TextAreaField, SubmitField, EmailField, IntegerField, BooleanField, \
-    SelectField
+from wtforms import PasswordField, StringField,  SubmitField, EmailField, IntegerField, BooleanField, SelectField
 from wtforms.validators import DataRequired
 
 
@@ -20,4 +19,4 @@ class RegisterForm(FlaskForm):
     boolField = BooleanField("Вы преподаватель?")
     select = SelectField('Направления',
                          choices=[('vol', 'Волонтёрство'), ('sp', 'Спорт'), ('na', 'Наука'), ('tv', 'Творчество')])
-    submit = SubmitField('Войти')
+    submit = SubmitField('Зарегистрироваться')
