@@ -50,7 +50,20 @@
               {% for club in clubs %}
                 <div class="col">
                   <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ club.title }}</text></svg>
+                      <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                        {% if club.type == 'vol' %}
+                        <rect width="100%" height="100%" fill="#17a2b8"></rect>
+                        {% elif club.type == 'sp' %}
+                        <rect width="100%" height="100%" fill="#D9596D"></rect>
+                        {% elif club.type == 'na' %}
+                        <rect width="100%" height="100%" fill="#5D84DA"></rect>
+                        {% elif club.type == 'tv' %}
+                        <rect width="100%" height="100%" fill="#DD865A"></rect>
+                        {% else %}
+                        <rect width="100%" height="100%" fill="#55595c"></rect>
+                        {% endif %}
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ club.title }}l</text>
+                    </svg>
                     <div class="card-body">
                       <p class="card-text">{{ club.about }}</p>
                       <div class="d-flex justify-content-between align-items-center">
