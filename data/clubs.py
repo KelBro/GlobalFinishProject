@@ -3,6 +3,7 @@ from sqlalchemy import orm
 
 from .db_session import SqlAlchemyBase
 
+
 class Clubs(SqlAlchemyBase):
     # Указываем название таблицы в базе данных
     __tablename__ = 'clubs'

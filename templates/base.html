@@ -39,7 +39,7 @@
                     <button type="button" class="btn btn-outline-light"><a href="/logout" class="nav-link">Выйти</a></button>
                     {% if current_user.is_teacher %}
                         {% if current_user.have_club %}
-                            <button type="button" class="btn btn-outline-light"><a href="/club/create" class="nav-link">Редактировать кружок</a></button>
+                            <button type="button" class="btn btn-outline-light"><a href="/club/edit" class="nav-link">Редактировать кружок</a></button>
                         {% else %}
                             <button type="button" class="btn btn-outline-light"><a href="/club/create" class="nav-link">Создать кружок</a></button>
                         {% endif %}
