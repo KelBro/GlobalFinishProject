@@ -2,10 +2,10 @@ from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 from data import db_session
-from data.clubs import Clubs
-from data.students import Student
+from data.__all_models import students, clubs, request
 from forms.add_club import ClubForm
 from forms.register_student import RegisterForm, LoginForm
+from forms.add_request import RequestSubmit
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sekretni_kodik'
@@ -16,7 +16,7 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
-    return db_sess.get(Student, user_id)
+    return db_sess.get(students.Student, user_id)
 
 
 # Главная страница
@@ -24,9 +24,9 @@ def load_user(user_id):
 @app.route('/index')
 def index():
     db_sess = db_session.create_session()
-    clubs = db_sess.query(Clubs).all()
+    clubss = db_sess.query(clubs.Clubs).all()
     db_sess.close()
-    return render_template("index.html", clubs=clubs)
+    return render_template("index.html", clubs=clubss)
 
 
 @app.route('/logout')
@@ -42,7 +42,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        user = db_sess.query(Student).filter(Student.email == form.email.data).first()
+        user = db_sess.query(students.Student).filter(students.Student.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
@@ -70,12 +70,12 @@ def reqister():
         # Создаем новую сессию базы данных
         db_sess = db_session.create_session()
         # Проверяем, существует ли пользователь с таким email
-        if db_sess.query(Student).filter(Student.email == form.email.data).first():
+        if db_sess.query(students.Student).filter(students.Student.email == form.email.data).first():
             return render_template('register.html', title='Регистрация',
                                    form=form,
                                    message="Такой пользователь уже есть")
         # Создаем нового пользователя
-        user = Student(
+        user = students.Student(
             name=form.name.data,
             email=form.email.data,
             age=form.age.data,
@@ -98,13 +98,14 @@ def add_club():
     form = ClubForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        if db_sess.query(Clubs).filter(Clubs.title == form.title.data).first():
+        if db_sess.query(clubs.Clubs).filter(clubs.Clubs.title == form.title.data).first():
             return render_template('add_club.html', title='Добавление кружка',
                                    form=form,
                                    message="Такой кружок уже есть")
         teacher_name = current_user.name
         type_club = current_user.name_club
-        club = Clubs(
+
+        club = clubs.Clubs(
             title=form.title.data,
             teacher_name=teacher_name,
             about=form.about.data,
@@ -113,7 +114,7 @@ def add_club():
 
         db_sess.add(club)
 
-        teacher = db_sess.query(Student).filter(Student.name == teacher_name).first()
+        teacher = db_sess.query(students.Student).filter(students.Student.name == teacher_name).first()
         teacher.have_club = 1
 
         db_sess.commit()
@@ -121,11 +122,41 @@ def add_club():
     return render_template('add_club.html', title='Добавление кружка', form=form)
 
 
+@app.route('/request/<club>', methods=['GET', 'POST'])
+@login_required
+def requesttt(club):
+    form = RequestSubmit()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        if db_sess.query(request.Request).filter(request.Request.name_club == club and request.Request.student == current_user.name).first():
+            return render_template('send_request.html', form=form,
+                                   message="Нельзя отправить заявку более одного раза")
+        else:
+            requestt = request.Request(
+                student=current_user.name,
+                name_club=club,
+                information=form.text.data
+            )
+            db_sess.add(requestt)
+            db_sess.commit()
+            return redirect(f"/")
+    return render_template('send_request.html', form=form)
+
+
+@app.route('/requests')
+@login_required
+def requests():
+    db_sess = db_session.create_session()
+    requestss = db_sess.query(request.Request).filter(request.Request.student == current_user.name)
+    db_sess.close()
+    return render_template("requests.html", requests=requestss)
+
+
 # Изменение кружка
 @app.route('/club/edit', methods=['GET', 'POST'])
 def edit_club():
     db_sess = db_session.create_session()
-    club = db_sess.query(Clubs).filter_by(teacher_name=current_user.name).first()
+    club = db_sess.query(clubs.Clubs).filter_by(teacher_name=current_user.name).first()
     if not club:
         return redirect('/')
     form = ClubForm(obj=club)
