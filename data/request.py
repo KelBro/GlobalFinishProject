@@ -15,3 +15,4 @@ class Request(SqlAlchemyBase):
     name_club = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     information = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     is_approved = sqlalchemy.Column(sqlalchemy.Boolean, nullable=True, default=None)
+    id_student = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
