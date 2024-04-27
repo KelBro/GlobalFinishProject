@@ -22,7 +22,6 @@ def load_user(user_id):
 
 # Главная страница
 @app.route('/')
-@app.route('/index')
 def index():
     db_sess = db_session.create_session()
     clubss = db_sess.query(clubs.Clubs).all()
