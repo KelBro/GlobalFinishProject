@@ -129,7 +129,8 @@ def requesttt(club):
     form = RequestSubmit()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        result = db_sess.query(request.Request).filter(and_(request.Request.id_student == current_user.id, request.Request.name_club == club)).all()
+        result = db_sess.query(request.Request).filter(
+            and_(request.Request.id_student == current_user.id, request.Request.name_club == club)).all()
         if result:
             return render_template('send_request.html', form=form,
                                    message="Нельзя отправить заявку более одного раза")
@@ -174,7 +175,7 @@ def edit_club():
     return render_template('edit_club.html', title='Изменение кружка', form=form)
 
 
-@app.route('/requests_students',  methods=['GET', 'POST'])
+@app.route('/requests_students', methods=['GET', 'POST'])
 @login_required
 def requests_students():
     db_sess = db_session.create_session()
